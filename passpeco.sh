@@ -29,7 +29,8 @@ case $ACT in
   show)
     # I want smarter way. I want to get line number instead of the text itself. 
     # Otherwise I cannot use "pass show -c".
-    pass show $SELECT | peco --prompt "Copy> " | xclip -r
+    #pass show $SELECT | peco --prompt "Copy> " | xclip -r
+    pass show $SELECT | peco --prompt "Copy> " 
     ;;
   edit)
     pass edit $SELECT
