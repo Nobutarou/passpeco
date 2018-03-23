@@ -1,0 +1,57 @@
+#!/bin/zsh
+
+export PASSWORD_STORE_DIR=${PASSWORD_STORE_DIR:-$HOME/.password-store}
+
+SELECT=${$(find $PASSWORD_STORE_DIR -name "*.gpg" | sed 's@^'"$PASSWORD_STORE_DIR"'\/@@' |peco --prompt="Entry> "):r}
+
+if [ -z $SELECT ];
+  then return;
+fi
+
+ACT=$(echo "edit
+show
+show-c
+rm
+cp
+mv" | peco --prompt="Act> ")
+
+if [ -z $ACT ];
+then return;
+fi
+
+export PINENTRY_USER_DATA=curses
+export EDITOR=vim
+
+# show once to pass pinentry. For this, don't disable pinentry caching.
+## I give up pinentry-curses. I choose pinentry-gtk2, then I don't need.
+# pass show $SELECT 
+# clear
+
+# case $TERM in 
+#   screen*)
+#     tmux clear-history
+#     clear
+#     ;;
+#   *)
+#     clear
+#     ;;
+# esac
+
+case $ACT in
+  show-c)
+    LINEID=$(pass show $SELECT | cat -n | peco | cut -f1)
+    pass show -c${LINEID// /} $SELECT
+    ;;
+  cp|mv)
+    NEWPATH=$(whiptail --inputbox "new path:" 0 30 "" 3>&1 1>&2 2>&3)
+    if [ -z $NEWPATH ];
+      then return;
+    fi
+    pass $ACT $SELECT $NEWPATH
+    ;;
+  *)
+    pass $ACT $SELECT
+    ;;
+esac
+
+
