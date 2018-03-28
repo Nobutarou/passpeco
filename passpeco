@@ -48,7 +48,11 @@ case $ACT in
     tmux set-buffer $select_lines
     ;;
   cp|mv)
-    NEWPATH=$(echo | peco --prompt "New Path > " --print-query --query $SELECT)
+    # If you want to use peco as read line, you can use it.
+    # But peco+uim has issue and then I don't use it
+    #NEWPATH=$(echo | peco --prompt "New Path > " --print-query --query $SELECT)
+    NEWPATH=$SELECT
+    vared -c -p 'New path >' NEWPATH
     if [ -z $NEWPATH ];
       then return;
     fi
