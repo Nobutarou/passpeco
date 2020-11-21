@@ -2,7 +2,7 @@
 
 export PASSWORD_STORE_DIR=${PASSWORD_STORE_DIR:-$HOME/.password-store}
 # export PINENTRY_USER_DATA=curses
-# export EDITOR=vim
+export EDITOR='vim --clean'
 
 SELECT=${$(find $PASSWORD_STORE_DIR -name "*.gpg" | sed 's@^'"$PASSWORD_STORE_DIR"'\/@@'|sort |peco --prompt="Entry> "):r}
 
