@@ -15,7 +15,8 @@ show
 show-c
 rm
 cp
-mv" | peco --prompt="Act> ")
+mv
+otp" | peco --prompt="Act> ")
 
 if [ -z $ACT ];
 then return;
