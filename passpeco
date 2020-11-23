@@ -52,7 +52,8 @@ case $ACT in
     # If you want peco as ``read``, use it. 
     #NEWPATH=$(echo | peco --prompt "New Path > " --print-query --query $SELECT)
     NEWPATH=$SELECT
-    vared -c -p 'New path >' NEWPATH
+    #vared -c -p 'New path >' NEWPATH
+    vared -p 'New path >' NEWPATH
     if [ -z $NEWPATH ];
       then return;
     fi
